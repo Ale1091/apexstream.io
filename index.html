@@ -425,7 +425,7 @@ header{text-align:center;padding:36px 16px 28px}
     <p>Elegí tu servicio, armá tu combo y confirmá por WhatsApp. Todo con entrega rápida, reposición en caso de fallos y soporte directo.</p>
     <div class="quick-cta-actions">
       <a class="btn-primary-hero" href="#catalogo"><i class="fas fa-bolt"></i> Ver plataformas</a>
-      <a class="btn-secondary-hero" href="https://wa.me/595994946115?text=Hola%20Apex!%20%F0%9F%91%8B%20Quiero%20comprar%20este%20plan"><i class="fab fa-whatsapp"></i> Pedir recomendación</a>
+      <a class="btn-secondary-hero" href="https://wa.me/595994946115?text=%C2%A1Hola%20ApexStream!%20Quiero%20consultar%20qu%C3%A9%20combo%20me%20conviene."><i class="fab fa-whatsapp"></i> Pedir recomendación</a>
     </div>
   </div>
   <div class="quick-cta-side">
@@ -821,8 +821,7 @@ function render() {
 
   const btn = document.getElementById('ws-link');
   if(cart.length > 0) {
-    const planLabel = combo ? `${combo.name} — ${names.join(' + ')}` : (names.length === 1 ? names[0] : names.join(' + '));
-    const msg = `Hola Apex! 👋 Quiero comprar este plan:\n\n📦 *${planLabel}*\n💰 *${total.toLocaleString('es-PY')} Gs.*\n\nSi está disponible, hago el pago ahora mismo 👍`;
+    const msg = `¡Hola Apex! \n\nQuiero confirmar mi pedido:\n${names.map(n=>'▸ '+n).join('\n')}\n\n${combo ? combo.name+'\n' : ''}💰 *Total: ${total.toLocaleString('es-PY')} Gs.*\n\nPor favor confirmen disponibilidad. ¡Gracias!`;
     btn.href = `https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`;
     btn.classList.remove('btn-ws-empty');
   } else {
