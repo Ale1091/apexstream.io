@@ -343,6 +343,42 @@ header{text-align:center;padding:36px 16px 28px}
   .section-hdr h2 { font-size: .8rem; }
 }
 
+
+
+/* CONVERSION BOOST */
+.quick-cta{max-width:1200px;margin:0 auto 18px;padding:0 16px;display:grid;grid-template-columns:1.2fr .8fr;gap:14px}
+.quick-cta-card,.quick-cta-side,.trust-section,.how-section{background:var(--card);border:1px solid var(--card-border);border-radius:18px;backdrop-filter:blur(12px)}
+.quick-cta-card{padding:20px 22px;background:linear-gradient(135deg,rgba(0,229,255,0.08),rgba(0,180,216,0.03));border-color:rgba(0,229,255,0.16)}
+.quick-cta-card h1{font-size:1.35rem;line-height:1.15;margin-bottom:8px}
+.quick-cta-card p{color:var(--muted2);font-size:.84rem;line-height:1.6;margin-bottom:14px}
+.quick-cta-actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn-primary-hero,.btn-secondary-hero{display:inline-flex;align-items:center;gap:8px;padding:12px 16px;border-radius:12px;text-decoration:none;font-weight:800;font-size:.78rem;letter-spacing:.8px;text-transform:uppercase;transition:.25s}
+.btn-primary-hero{background:linear-gradient(135deg,var(--cyan),var(--cyan2));color:#00141a;box-shadow:0 8px 28px rgba(0,229,255,0.18)}
+.btn-secondary-hero{border:1px solid rgba(255,255,255,0.1);color:var(--text);background:rgba(255,255,255,0.03)}
+.btn-primary-hero:hover,.btn-secondary-hero:hover{transform:translateY(-2px)}
+.quick-cta-side{padding:18px;display:grid;gap:10px}
+.mini-proof{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05)}
+.mini-proof i{color:var(--cyan);margin-top:2px}
+.mini-proof strong{display:block;font-size:.77rem}
+.mini-proof span{display:block;font-size:.68rem;color:var(--muted2);line-height:1.45}
+.section-shell{max-width:1200px;margin:0 auto;padding:0 16px 18px}
+.trust-grid,.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.trust-section,.how-section{padding:18px}
+.trust-item,.how-item{padding:15px;border-radius:16px;background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.05)}
+.trust-item i,.how-item i{font-size:1rem;color:var(--cyan);margin-bottom:10px}
+.trust-item h3,.how-item h3{font-size:.85rem;margin-bottom:5px}
+.trust-item p,.how-item p{font-size:.7rem;color:var(--muted2);line-height:1.55}
+.card-oldprice{font-size:.62rem;color:var(--muted);text-decoration:line-through;display:block;margin-bottom:2px}
+.card-save{display:inline-flex;align-items:center;justify-content:center;margin-top:10px;padding:4px 8px;border-radius:999px;font-size:.58rem;font-weight:800;letter-spacing:.7px;text-transform:uppercase;background:rgba(74,222,128,0.12);color:var(--green)}
+.card-actions{display:flex;gap:8px;margin-top:12px}
+.card-btn{flex:1;border:none;border-radius:10px;padding:10px 8px;font-family:var(--ff);font-weight:800;font-size:.68rem;cursor:pointer;transition:.2s}
+.card-btn-main{background:linear-gradient(135deg,var(--cyan),var(--cyan2));color:#00141a}
+.card-btn-alt{background:rgba(255,255,255,0.04);color:var(--text);border:1px solid rgba(255,255,255,0.07)}
+.card-btn:hover{transform:translateY(-2px)}
+.floating-proof{position:fixed;left:18px;bottom:98px;z-index:490;padding:10px 12px;border-radius:12px;background:rgba(7,12,18,0.92);border:1px solid rgba(255,214,10,0.2);color:var(--gold);font-size:.64rem;font-weight:800;letter-spacing:.7px;text-transform:uppercase;backdrop-filter:blur(10px)}
+@media (max-width:999px){.quick-cta{grid-template-columns:1fr}.trust-grid,.how-grid{grid-template-columns:1fr}.floating-proof{display:none}}
+@media (max-width:767px){.quick-cta{padding:0 12px;margin-bottom:14px}.quick-cta-card{padding:16px}.quick-cta-card h1{font-size:1.08rem}.quick-cta-card p{font-size:.75rem}.quick-cta-actions{gap:8px}.btn-primary-hero,.btn-secondary-hero{width:100%;justify-content:center}.section-shell{padding:0 12px 16px}.trust-section,.how-section{padding:14px}.card-actions{flex-direction:column}.card-btn{font-size:.7rem;padding:10px}.card-save{font-size:.56rem}.floating-proof{display:none}}
+
 </style>
 </head>
 <body>
@@ -375,9 +411,27 @@ header{text-align:center;padding:36px 16px 28px}
       <span class="urgency-text">⚠️ Oferta especial activa hoy — cupos limitados para nuevos clientes</span>
     </div>
     <div class="urgency-right">
-      <span class="urgency-tag tag-fire">🔥 HOY SOLO</span>
+      <span class="urgency-tag tag-fire">🔥 SOLO HOY</span>
       <span class="urgency-tag tag-combo">🎁 COMBOS -30%</span>
     </div>
+  </div>
+</div>
+
+
+<!-- QUICK CTA -->
+<div class="quick-cta">
+  <div class="quick-cta-card">
+    <h1>Activá tus plataformas <span style="color:var(--cyan)">en minutos</span> y ahorrá más con combos.</h1>
+    <p>Elegí tu servicio, armá tu combo y confirmá por WhatsApp. Todo con entrega rápida, reposición en caso de fallos y soporte directo.</p>
+    <div class="quick-cta-actions">
+      <a class="btn-primary-hero" href="#catalogo"><i class="fas fa-bolt"></i> Ver plataformas</a>
+      <a class="btn-secondary-hero" href="https://wa.me/595994946115?text=Hola%20Apex!%20%F0%9F%91%8B%20Quiero%20comprar%20este%20plan"><i class="fab fa-whatsapp"></i> Pedir recomendación</a>
+    </div>
+  </div>
+  <div class="quick-cta-side">
+    <div class="mini-proof"><i class="fas fa-shield-halved"></i><div><strong>Garantía y reposición</strong><span>Si surge un problema, te ayudamos y reponemos según corresponda.</span></div></div>
+    <div class="mini-proof"><i class="fas fa-layer-group"></i><div><strong>Combos con ahorro real</strong><span>El sistema muestra automáticamente cuando un pack te conviene más.</span></div></div>
+    <div class="mini-proof"><i class="fas fa-stopwatch"></i><div><strong>Compra simple</strong><span>Elegís, confirmás por WhatsApp y recibís los datos sin vueltas.</span></div></div>
   </div>
 </div>
 
@@ -485,7 +539,7 @@ header{text-align:center;padding:36px 16px 28px}
 <div class="section-hdr" style="margin-bottom:14px">
   <h2>🎯 ELEGÍ TUS <span>PLATAFORMAS</span></h2>
 </div>
-<div class="container">
+<div class="container" id="catalogo">
   <div class="grid">
 
     <div class="card" data-name="Netflix" data-price="30000" onclick="toggleCard(this)">
@@ -596,6 +650,30 @@ header{text-align:center;padding:36px 16px 28px}
 
   </div>
 </div>
+
+
+<div class="section-shell">
+  <div class="section-hdr"><h2>✅ <span>CÓMO FUNCIONA</span> — COMPRÁ EN 3 PASOS</h2></div>
+  <div class="how-section">
+    <div class="how-grid">
+      <div class="how-item"><i class="fas fa-hand-pointer"></i><h3>1. Elegí tu plan</h3><p>Seleccioná una o varias plataformas. Si tu elección activa un combo, el precio promocional se aplica automáticamente.</p></div>
+      <div class="how-item"><i class="fab fa-whatsapp"></i><h3>2. Confirmá por WhatsApp</h3><p>El botón genera tu pedido con el total y las plataformas elegidas para que la atención sea más rápida.</p></div>
+      <div class="how-item"><i class="fas fa-key"></i><h3>3. Recibí tu acceso</h3><p>Una vez confirmado, te pasan los datos y quedás con soporte disponible para cualquier consulta.</p></div>
+    </div>
+  </div>
+</div>
+<div class="section-shell">
+  <div class="section-hdr"><h2>🔒 <span>COMPRA CON CONFIANZA</span></h2></div>
+  <div class="trust-section">
+    <div class="trust-grid">
+      <div class="trust-item"><i class="fas fa-shield-heart"></i><h3>Garantía visible</h3><p>No queda escondida en el ticker. La propuesta deja claro que hay respaldo y atención ante inconvenientes.</p></div>
+      <div class="trust-item"><i class="fas fa-headset"></i><h3>Soporte directo</h3><p>Contacto rápido por WhatsApp para resolver dudas, confirmar disponibilidad y cerrar la compra sin fricción.</p></div>
+      <div class="trust-item"><i class="fas fa-fire-flame-curved"></i><h3>Ofertas activas</h3><p>Mensajes de urgencia y ahorro mejor organizados para que el cliente entienda por qué conviene comprar hoy.</p></div>
+    </div>
+  </div>
+</div>
+<div class="floating-proof">⚡ Oferta activa hoy · Combos con ahorro automático</div>
+
 
 <!-- CHECKOUT BAR -->
 <div class="checkout-bar">
@@ -743,7 +821,8 @@ function render() {
 
   const btn = document.getElementById('ws-link');
   if(cart.length > 0) {
-    const msg = `¡Hola *ApexStream*! ▲\n\nQuiero confirmar mi pedido:\n${names.map(n=>'▸ '+n).join('\n')}\n\n${combo ? combo.name+'\n' : ''}💰 *Total: ${total.toLocaleString('es-PY')} Gs.*\n\nPor favor confirmen disponibilidad. ¡Gracias!`;
+    const planLabel = combo ? `${combo.name} — ${names.join(' + ')}` : (names.length === 1 ? names[0] : names.join(' + '));
+    const msg = `Hola Apex! 👋 Quiero comprar este plan:\n\n📦 *${planLabel}*\n💰 *${total.toLocaleString('es-PY')} Gs.*\n\nSi está disponible, hago el pago ahora mismo 👍`;
     btn.href = `https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`;
     btn.classList.remove('btn-ws-empty');
   } else {
@@ -858,6 +937,85 @@ function buildPriceResponse(platforms) {
   }
   return resp;
 }
+
+
+
+function getReferencePrice(name, current){
+  const refs = {
+    'Netflix': 38000,
+    'Disney+': 38000,
+    'Spotify': 30000,
+    'YouTube': 32000,
+    'Max (HBO)': 28000,
+    'Crunchyroll': 28000,
+    'Prime Video': 28000,
+    'Paramount+': 28000,
+    'FlujoTV Mensual': 45000,
+    'FlujoTV Anual': 420000,
+    'Spotify 3 Meses': 80000,
+  };
+  return refs[name] || Math.round(current * 1.25 / 1000) * 1000;
+}
+
+function enhanceCards(){
+  document.querySelectorAll('.card').forEach(card => {
+    if(card.dataset.enhanced === '1') return;
+    card.dataset.enhanced = '1';
+    const name = card.dataset.name;
+    const price = parseInt(card.dataset.price || '0', 10);
+    const priceWrap = card.querySelector('.price-wrap');
+    if(priceWrap){
+      const old = getReferencePrice(name, price);
+      if(old > price){
+        const oldEl = document.createElement('span');
+        oldEl.className = 'card-oldprice';
+        oldEl.textContent = old.toLocaleString('es-PY') + ' Gs.';
+        priceWrap.parentNode.insertBefore(oldEl, priceWrap);
+      }
+      const save = document.createElement('div');
+      save.className = 'card-save';
+      const diff = Math.max(0, getReferencePrice(name, price) - price);
+      save.textContent = diff > 0 ? 'Ahorrás ' + diff.toLocaleString('es-PY') + ' Gs.' : 'Oferta activa';
+      priceWrap.insertAdjacentElement('afterend', save);
+    }
+
+    const actions = document.createElement('div');
+    actions.className = 'card-actions';
+    actions.innerHTML = `
+      <button class="card-btn card-btn-main" type="button">Comprar ahora</button>
+      <button class="card-btn card-btn-alt" type="button">Agregar</button>
+    `;
+    const main = actions.querySelector('.card-btn-main');
+    const alt = actions.querySelector('.card-btn-alt');
+    main.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if(!card.classList.contains('selected')) toggleCard(card);
+      const btn = document.getElementById('ws-link');
+      if(btn && btn.href && btn.href !== '#') window.open(btn.href, '_blank');
+    });
+    alt.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleCard(card);
+      const selected = card.classList.contains('selected');
+      alt.textContent = selected ? 'Agregado ✓' : 'Agregar';
+    });
+    card.appendChild(actions);
+  });
+}
+
+const oldRender = render;
+render = function(){
+  oldRender();
+  document.querySelectorAll('.card').forEach(card => {
+    const alt = card.querySelector('.card-btn-alt');
+    if(alt) alt.textContent = card.classList.contains('selected') ? 'Agregado ✓' : 'Agregar';
+  });
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  enhanceCards();
+  render();
+});
 
 function aiSend() {
   const inp = document.getElementById('ai-input');
