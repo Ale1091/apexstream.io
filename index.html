@@ -364,18 +364,24 @@ header{text-align:center;padding:36px 16px 28px}
 <!-- HEADER -->
 <header>
   <div class="logo-img-wrap">
-    <svg id="apex-logo" viewBox="0 0 528 160" xmlns="http://www.w3.org/2000/svg" class="apex-logo-svg">
-      <!-- ApexStream Logo with transparent background -->
+    <svg id="apex-logo" viewBox="0 0 550 160" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="apexGradient" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:1" />
           <stop offset="100%" style="stop-color:#0099CC;stop-opacity:1" />
         </linearGradient>
       </defs>
-      <!-- Triangle Peak Icon -->
-      <path d="M 80 30 L 120 100 L 40 100 Z" fill="url(#apexGradient)" stroke="none"/>
-      <!-- "ApexStream" Text -->
-      <text x="160" y="85" font-family="Plus Jakarta Sans, sans-serif" font-size="72" font-weight="900" fill="#00D4FF" letter-spacing="-1">ApexStream</text>
+      <!-- Apex Letter A (Professional Design) -->
+      <g fill="url(#apexGradient)">
+        <!-- Left stroke of A -->
+        <path d="M 35 120 L 85 20 L 105 20 L 155 120 Z M 65 70 L 125 70 L 95 35 Z" fill="#001A2E"/>
+        <path d="M 40 120 L 90 25 L 100 25 L 150 120 Z M 70 70 L 120 70 L 95 40 Z" fill="url(#apexGradient)"/>
+        <!-- Triangle detail inside A -->
+        <path d="M 95 50 L 110 80 L 80 80 Z" fill="#00D4FF" opacity="0.6"/>
+      </g>
+      <!-- Text: ApexStream -->
+      <text x="180" y="95" font-family="Plus Jakarta Sans, sans-serif" font-size="80" font-weight="900" fill="#001A2E" letter-spacing="-1">ApexStream</text>
+      <text x="175" y="90" font-family="Plus Jakarta Sans, sans-serif" font-size="80" font-weight="900" fill="url(#apexGradient)" letter-spacing="-1">ApexStream</text>
     </svg>
   </div>
   <p class="logo-sub">Elite Digital Distribution &nbsp;•&nbsp; <span>Paraguay</span></p>
@@ -501,8 +507,11 @@ header{text-align:center;padding:36px 16px 28px}
       <span class="combo-badge combo-badge-popular">NUEVO</span>
     </div>
     <div class="combo-plats-icons">
-      <div class="combo-plat-icon" style="background:#1a0a00;border-color:rgba(255,80,0,0.3)">
-        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23FF5000' width='100' height='100'/%3E%3Ctext x='50' y='55' text-anchor='middle' font-size='40' fill='white' font-weight='bold'%3ETV%3C/text%3E%3C/svg%3E" alt="FlujoTV">
+      <div class="combo-plat-icon" style="background:linear-gradient(135deg,#FF7A00,#FF5500);border-color:rgba(255,122,0,0.5)">
+        <svg width="24" height="24" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <rect x="20" y="30" width="60" height="50" rx="8" fill="white"/>
+          <text x="50" y="65" text-anchor="middle" font-size="28" font-weight="bold" fill="#FF7A00" font-family="sans-serif">TV</text>
+        </svg>
       </div>
       <span class="combo-plus">+</span>
       <span class="combo-any">1 plataforma a elegir</span>
@@ -572,7 +581,10 @@ header{text-align:center;padding:36px 16px 28px}
     <div class="card" data-name="Max (HBO)" data-price="20000" onclick="toggleCard(this)">
       <span class="badge badge-pop">Exclusivo</span>
       <div class="plat-logo" style="background:#000;border-color:rgba(255,255,255,0.1)">
-        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60'%3E%3Crect fill='none' width='100' height='60'/%3E%3Ctext x='50' y='38' text-anchor='middle' font-size='28' fill='white' font-weight='bold' font-family='sans-serif'%3EMAX%3C/text%3E%3C/svg%3E" alt="Max">
+        <svg width="50" height="50" viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg">
+          <text x="50" y="42" text-anchor="middle" font-size="32" font-weight="bold" fill="#F5F5F5" font-family="Arial, sans-serif">HBO</text>
+          <text x="50" y="58" text-anchor="middle" font-size="16" font-weight="600" fill="#B0B0B0" font-family="Arial, sans-serif">max</text>
+        </svg>
       </div>
       <h3>Max (HBO)</h3>
       <p class="details">Series Exclusivas · 4K HDR<br>HBO Originals</p>
@@ -599,8 +611,14 @@ header{text-align:center;padding:36px 16px 28px}
 
     <div class="card" data-name="Paramount+" data-price="20000" onclick="toggleCard(this)">
       <span class="badge badge-deal">Oferta</span>
-      <div class="plat-logo" style="background:#000;border-color:rgba(0,100,255,0.3)">
-        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%230064FF' width='100' height='100'/%3E%3Ctext x='50' y='55' text-anchor='middle' font-size='24' fill='white' font-weight='bold'%3EP%2B%3C/text%3E%3C/svg%3E" alt="Paramount+">
+      <div class="plat-logo" style="background:linear-gradient(135deg,#0050D8,#0039A6);border-color:rgba(0,80,216,0.5)">
+        <svg width="50" height="50" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <!-- Paramount+ Logo (simplified) -->
+          <circle cx="50" cy="35" r="28" fill="none" stroke="white" stroke-width="2"/>
+          <circle cx="50" cy="35" r="24" fill="none" stroke="white" stroke-width="1.5"/>
+          <path d="M 42 28 L 50 18 L 58 28" fill="white"/>
+          <text x="50" y="68" text-anchor="middle" font-size="14" font-weight="bold" fill="white" font-family="serif">P+</text>
+        </svg>
       </div>
       <h3>Paramount+</h3>
       <p class="details">Cine, Deportes y Series<br>Full HD · CBS · MTV</p>
@@ -609,8 +627,11 @@ header{text-align:center;padding:36px 16px 28px}
 
     <div class="card" data-name="FlujoTV Mensual" data-price="35000" onclick="toggleCard(this)">
       <span class="badge badge-new">Nuevo</span>
-      <div class="plat-logo" style="background:#1a0a00;border-color:rgba(255,80,0,0.35)">
-        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23FF5000' width='100' height='100'/%3E%3Ctext x='50' y='55' text-anchor='middle' font-size='40' fill='white' font-weight='bold'%3ETV%3C/text%3E%3C/svg%3E" alt="FlujoTV">
+      <div class="plat-logo" style="background:linear-gradient(135deg,#FF7A00,#FF5500);border-color:rgba(255,122,0,0.5)">
+        <svg width="50" height="50" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <rect x="20" y="30" width="60" height="50" rx="8" fill="white"/>
+          <text x="50" y="65" text-anchor="middle" font-size="28" font-weight="bold" fill="#FF7A00" font-family="sans-serif">TV</text>
+        </svg>
       </div>
       <h3>FlujoTV</h3>
       <p class="details">Canales en vivo · VOD<br>Plan Mensual</p>
@@ -619,19 +640,10 @@ header{text-align:center;padding:36px 16px 28px}
 
     <div class="card" data-name="FlujoTV Anual" data-price="240000" onclick="toggleCard(this)">
       <span class="badge badge-deal">Mejor precio</span>
-      <div class="plat-logo" style="background:#1a0a00;border-color:rgba(255,80,0,0.35)">
-        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23FF5000' width='100' height='100'/%3E%3Ctext x='50' y='55' text-anchor='middle' font-size='40' fill='white' font-weight='bold'%3ETV%3C/text%3E%3C/svg%3E" alt="FlujoTV">
+      <div class="plat-logo" style="background:linear-gradient(135deg,#FF7A00,#FF5500);border-color:rgba(255,122,0,0.5)">
+        <svg width="50" height="50" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <rect x="20" y="30" width="60" height="50" rx="8" fill="white"/>
+          <text x="50" y="65" text-anchor="middle" font-size="28" font-weight="bold" fill="#FF7A00" font-family="sans-serif">TV</text>
+        </svg>
       </div>
-      <h3>FlujoTV Anual</h3>
-      <p class="details">Canales en vivo · VOD<br>12 meses — ahorrás 180k</p>
-      <div class="price-wrap"><span class="price">240.000</span><span class="price-mo">Gs./año</span></div>
-    </div>
-  </div>
-</div>
-
-<div class="section-shell">
-  <div class="section-hdr"><h2>✅ <span>CÓMO FUNCIONA</span> — COMPRÁ EN 3 PASOS</h2></div>
-  <div class="how-section">
-    <div class="how-grid">
-      <div class="how-item"><i class="fas fa-hand-pointer"></i><h3>1. Elegí tu plan</h3><p>Seleccioná una o varias plataformas. Si tu elección activa un combo, el precio promocional se aplica automáticamente.</p></div>
-      <div class="how-item"><i class="fab fa-whatsapp"></i><h
+      <h3>
