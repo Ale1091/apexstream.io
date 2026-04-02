@@ -101,6 +101,25 @@ header{border-bottom:1px solid #00FFFF22;background:linear-gradient(180deg,#0B0B
 .remove-btn{background:#FF000022;border:1px solid #FF000044;border-radius:6px;padding:4px 10px;color:#EF4444;cursor:pointer;font-size:12px}
 footer{text-align:center;padding:24px 20px;border-top:1px solid #00FFFF11;color:#1E293B;font-family:'Rajdhani',sans-serif;font-size:12px}
 
+/* HOW IT WORKS */
+.how-it-works{padding:40px 20px 48px;background:linear-gradient(180deg,#0B0B0B 0%,#0d1117 100%)}
+.hiw-inner{max-width:900px;margin:0 auto}
+.hiw-subtitle{text-align:center;color:#64748B;font-family:'Rajdhani',sans-serif;font-size:15px;margin-bottom:36px}
+.hiw-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;position:relative}
+@media(max-width:640px){.hiw-steps{grid-template-columns:1fr;gap:24px}}
+.hiw-step{display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 12px;position:relative}
+.hiw-icon-wrap{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:16px;position:relative;flex-shrink:0}
+.hiw-cyan{background:#00FFFF14;border:2px solid #00FFFF44;box-shadow:0 0 24px #00FFFF22}
+.hiw-violet{background:#A855F714;border:2px solid #A855F744;box-shadow:0 0 24px #A855F722}
+.hiw-green{background:#22C55E14;border:2px solid #22C55E44;box-shadow:0 0 24px #22C55E22}
+.hiw-icon{font-size:30px;line-height:1}
+.hiw-connector{position:absolute;top:50%;left:calc(50% + 36px);height:2px;width:calc(100% + 24px);transform:translateY(-50%);pointer-events:none}
+.hiw-connector-cyan{background:linear-gradient(90deg,#00FFFF55,#A855F733)}
+.hiw-connector-violet{background:linear-gradient(90deg,#A855F755,#22C55E33)}
+@media(max-width:640px){.hiw-connector{display:none}}
+.hiw-step-num{font-size:11px;font-weight:700;letter-spacing:3px;margin-bottom:6px;opacity:.7}
+.hiw-step-title{font-size:14px;font-weight:700;margin-bottom:8px;color:#F1F5F9}
+.hiw-step-desc{color:#64748B;font-family:'Rajdhani',sans-serif;font-size:13px;line-height:1.6;max-width:220px}
 .social-fabs{position:fixed;right:24px;bottom:24px;display:flex;flex-direction:column;gap:12px;z-index:9999}
 .social-fab{width:58px;height:58px;display:block;border-radius:18px;overflow:hidden;text-decoration:none;box-shadow:0 0 18px #0008;transition:transform .2s ease,box-shadow .2s ease;pointer-events:auto}
 .social-fab:hover{transform:scale(1.06)}
@@ -148,6 +167,42 @@ footer{text-align:center;padding:24px 20px;border-top:1px solid #00FFFF11;color:
     <span class="badge">🔒 Garantía Total</span>
     <span class="badge">⚡ Entrega Inmediata</span>
     <span class="badge">🌙 Soporte 24/7</span>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-it-works">
+  <div class="hiw-inner">
+    <h2 class="section-title orb" style="color:#00FFFF;text-align:center;margin-bottom:8px">◈ ¿Cómo funciona?</h2>
+    <p class="hiw-subtitle">Activá tu servicio en minutos, sin complicaciones.</p>
+    <div class="hiw-steps">
+      <div class="hiw-step">
+        <div class="hiw-icon-wrap hiw-cyan">
+          <span class="hiw-icon">🎯</span>
+          <div class="hiw-connector hiw-connector-cyan"></div>
+        </div>
+        <div class="hiw-step-num orb" style="color:#00FFFF">01</div>
+        <div class="hiw-step-title orb">Elegís tu plan</div>
+        <div class="hiw-step-desc">Explorá el catálogo, seleccioná las plataformas que querés y armá tu combo ideal.</div>
+      </div>
+      <div class="hiw-step">
+        <div class="hiw-icon-wrap hiw-violet">
+          <span class="hiw-icon">💬</span>
+          <div class="hiw-connector hiw-connector-violet"></div>
+        </div>
+        <div class="hiw-step-num orb" style="color:#A855F7">02</div>
+        <div class="hiw-step-title orb">Confirmás por WhatsApp</div>
+        <div class="hiw-step-desc">Hacés click en "Confirmar pedido", nos escribís por WhatsApp y coordinamos el pago.</div>
+      </div>
+      <div class="hiw-step">
+        <div class="hiw-icon-wrap hiw-green">
+          <span class="hiw-icon">⚡</span>
+        </div>
+        <div class="hiw-step-num orb" style="color:#22C55E">03</div>
+        <div class="hiw-step-title orb">¡Listo, a disfrutar!</div>
+        <div class="hiw-step-desc">En minutos recibís tus accesos y ya podés usar tus plataformas desde cualquier dispositivo.</div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -243,13 +298,13 @@ const BASICAS = ["paramount","crunchyroll","prime","hbo"];
 const PRODUCTS = [
   {id:"netflix",name:"Netflix",img:"netflix",color:"#E50914",glow:"#E50914",price:30000,original:35000},
   {id:"disney",name:"Disney+",img:"disney",color:"#113CCF",glow:"#1a6fff",price:30000,original:35000},
-  {id:"spotify",name:"Spotify",img:"spotify",color:"#1DB954",glow:"#1DB954",price:22000,original:32000},
+  {id:"spotify",name:"Spotify",img:"spotify",color:"#1DB954",glow:"#1DB954",price:22000,original:32000,isSelector:true,options:[{label:"Mensual",price:22000,original:32000},{label:"3 Meses",price:60000,original:66000,tag:"🔥 3 MESES"}]},
   {id:"youtube",name:"YouTube Premium",img:"youtube",color:"#FF0000",glow:"#FF0000",price:25000,original:33000},
   {id:"hbo",name:"HBO Max",img:"hbo",color:"#8B5CF6",glow:"#A78BFA",price:20000,original:25000},
   {id:"prime",name:"Prime Video",img:"prime",color:"#00A8E0",glow:"#00CFFF",price:20000,original:25000},
   {id:"crunchyroll",name:"Crunchyroll",img:"crunchyroll",color:"#F47521",glow:"#FF8C3A",price:20000,original:25000},
   {id:"paramount",name:"Paramount+",img:"paramount",color:"#0064FF",glow:"#0090FF",price:20000,original:25000},
-  {id:"flujo",name:"Flujo TV",img:"flujo",color:"#FF5500",glow:"#FF7722",price:35000,original:45000},
+  {id:"flujo",name:"Flujo TV",img:"flujo",color:"#FF5500",glow:"#FF7722",price:35000,original:45000,isSelector:true,options:[{label:"Mensual",price:35000,original:45000},{label:"Anual",price:249000,original:420000,tag:"🔥 ANUAL"}]},
   {id:"canva",name:"Canva Premium",img:"canva",color:"#00C4CC",glow:"#00E5FF",price:30000,original:null,isWarning:true,warning:"SERVICIO NO RENOVABLE"}
 ];
 
