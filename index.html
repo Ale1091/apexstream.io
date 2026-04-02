@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{max-width:100%;overflow-x:hidden} body{background:#0B0B0B;color:#fff;font-family:'Rajdhani',sans-serif;min-height:100vh;width:100%;position:relative}
+html,body{max-width:100%;overflow-x:hidden} body{background:#0B0B0B;color:#fff;font-family:'Rajdhani',sans-serif;min-height:100vh;width:100%;position:relative;padding-top:80px}
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:#111}
 ::-webkit-scrollbar-thumb{background:#00FFFF44;border-radius:4px}
@@ -24,7 +24,7 @@ html,body{max-width:100%;overflow-x:hidden} body{background:#0B0B0B;color:#fff;f
 @keyframes slideIn{from{transform:translateX(100%)}to{transform:translateX(0)}}
 .slide-in{animation:slideIn .3s ease forwards}
 .scanline{background:repeating-linear-gradient(0deg,transparent,transparent 2px,#00FFFF04 2px,#00FFFF04 4px);pointer-events:none}
-header{border-bottom:1px solid #00FFFF22;background:linear-gradient(180deg,#0B0B0B 0%,#0d1117 100%);position:sticky;top:0;z-index:100;backdrop-filter:blur(12px)}
+header{border-bottom:1px solid #00FFFF22;background:linear-gradient(180deg,#0B0B0B 0%,#0d1117 100%);position:fixed;top:0;width:100%;z-index:100;backdrop-filter:blur(12px)}
 .header-inner{max-width:1200px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .logo-area{display:flex;align-items:center;gap:12px}
 .logo-img{height:58px;mix-blend-mode:screen;filter:brightness(1.4) contrast(1.2) drop-shadow(0 0 6px #00FFFF) drop-shadow(0 0 14px #00FFFFaa) drop-shadow(0 0 28px #A855F766);object-fit:contain;display:block}
@@ -349,7 +349,50 @@ function showToast(msg, color) {
 }
 
 // --- COMBO DETECTION RULES ---
-function detectCombo(cartItems) { return null; }
+function detectCombo(cartItems) {
+  const items = cartItems.filter(c => !c.isCombo);
+
+  if (!items.length) return null;
+
+  const principalIds = ['netflix','disney','spotify','youtube'];
+  const basicIds = ['paramount','crunchyroll','prime','hbo'];
+
+  const isSpotifyComboEligible = item => {
+    if (item.baseId !== 'spotify') return true;
+    const n = (item.name || '').toLowerCase();
+    return !n.includes('3 meses');
+  };
+
+  const validItems = items.filter(item => {
+    if (principalIds.includes(item.baseId)) return isSpotifyComboEligible(item);
+    if (basicIds.includes(item.baseId)) return true;
+    return false;
+  });
+
+  if (validItems.length !== items.length) return null;
+
+  const principalCount = validItems.filter(item => principalIds.includes(item.baseId)).length;
+  const basicCount = validItems.filter(item => basicIds.includes(item.baseId)).length;
+  const total = validItems.length;
+
+  if (total === 4 && principalCount === 4 && basicCount === 0) {
+    return APEX_PLANS.find(p => p.id === 'apex_max') || null;
+  }
+
+  if (total === 3 && principalCount === 3 && basicCount === 0) {
+    return APEX_PLANS.find(p => p.id === 'apex_premium') || null;
+  }
+
+  if (total === 3 && principalCount === 2 && basicCount === 1) {
+    return APEX_PLANS.find(p => p.id === 'apex_pro') || null;
+  }
+
+  if (total === 3 && principalCount === 1 && basicCount === 2) {
+    return APEX_PLANS.find(p => p.id === 'combo_estandar') || null;
+  }
+
+  return null;
+}
 
 
 function updateCartUI() {
@@ -474,7 +517,7 @@ function addToCart(id, isCombo) {
     showToast('✅ '+(prod.name+(label?' '+label:''))+' agregado');
   }
   updateCartUI();
-  toggleCart(true);
+  
 }
 
 function removeFromCart(id) {
@@ -494,7 +537,8 @@ function toggleFaq() {
 
 function sendWhatsApp() {
   const nonCombo = cart.filter(c=>!c.isCombo);
-  const appliedCombo = cart.find(c=>c.isCombo);
+  const manualCombo = detectCombo(nonCombo);
+  const appliedCombo = cart.find(c=>c.isCombo) || manualCombo;
   const items = nonCombo.map(c=>'• '+c.name+': '+fmt(c.price)).join('%0A');
   const total = appliedCombo ? appliedCombo.price : nonCombo.reduce((s,c)=>s+c.price,0);
   const comboTxt = appliedCombo ? appliedCombo.name : 'Sin combo';
@@ -745,7 +789,7 @@ function addPlanToCart(planId) {
   cart.push({id:'combo_'+plan.id, name:`${plan.name} — ${names.join(', ')}`, price:plan.price, isCombo:true});
   showToast('✅ '+plan.name+' agregado', plan.color || '#00FFFF');
   updateCartUI();
-  toggleCart(true);
+  
 }
 
 
