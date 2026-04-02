@@ -239,20 +239,64 @@ const FAQ = [
 // State
 let cart = [];
 let selOptions = {};
+let detectedCombo = null;
 
 function fmt(n) {
   return n.toLocaleString('es-PY') + ' Gs';
 }
 
-function showToast(msg) {
+function showToast(msg, color) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
+  t.innerHTML = msg;
+  t.style.borderColor = (color||'#00FFFF')+'88';
+  t.style.color = color||'#00FFFF';
   t.style.display = 'block';
-  setTimeout(() => t.style.display = 'none', 2500);
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(() => t.style.display = 'none', 3500);
+}
+
+// --- COMBO DETECTION RULES ---
+// Returns the best matching combo based on cart items, or null
+function detectCombo(cartItems) {
+  const ids = cartItems.map(c => c.baseId); // use baseId (product id without label)
+
+  const hasPrincipal = id => ids.includes(id);
+  const principals = ['netflix','disney','spotify','flujo'];
+  const secundarios = ['hbo','prime','crunchyroll','paramount','youtube'];
+
+  const principalsInCart = principals.filter(p => hasPrincipal(p));
+  const secundariosInCart = secundarios.filter(s => hasPrincipal(s));
+  const totalItems = cartItems.filter(c=>!c.isCombo).length;
+
+  // Apex Premium: 3 principales (netflix+disney+spotify)
+  if (['netflix','disney','spotify'].every(p=>hasPrincipal(p)) && totalItems === 3)
+    return COMBOS.find(c=>c.id==='apex_premium');
+
+  // Apex Pro: 2 de (netflix/disney/spotify) + 1 secundario
+  const mainThree = ['netflix','disney','spotify'].filter(p=>hasPrincipal(p));
+  if (mainThree.length === 2 && secundariosInCart.length >= 1 && totalItems === 3)
+    return COMBOS.find(c=>c.id==='apex_pro');
+
+  // Combo Apex: 1 de (netflix/disney/spotify) + 2 secundarios
+  if (mainThree.length === 1 && secundariosInCart.length >= 2 && totalItems === 3)
+    return COMBOS.find(c=>c.id==='apex');
+
+  // Flujo Plus: flujo + 1 secundario
+  if (hasPrincipal('flujo') && secundariosInCart.length >= 1 && principalsInCart.filter(p=>p!=='flujo').length === 0 && totalItems === 2)
+    return COMBOS.find(c=>c.id==='flujo_plus');
+
+  // Duo Apex: 1 principal (cualquiera incl. flujo) + 1 secundario
+  if (principalsInCart.length === 1 && secundariosInCart.length === 1 && totalItems === 2)
+    return COMBOS.find(c=>c.id==='duo_apex');
+
+  return null;
 }
 
 function updateCartUI() {
-  const count = cart.length;
+  const nonComboItems = cart.filter(c=>!c.isCombo);
+  detectedCombo = detectCombo(nonComboItems);
+
+  const count = cart.filter(c=>!c.isCombo).length;
   const badge = document.getElementById('cart-count');
   badge.textContent = count;
   badge.style.display = count > 0 ? 'inline' : 'none';
@@ -261,36 +305,95 @@ function updateCartUI() {
   const empty = document.getElementById('cart-empty');
   const footer = document.getElementById('cart-footer');
   const totalEl = document.getElementById('cart-total');
+  const savingsRow = document.getElementById('cart-savings');
 
-  if (count === 0) {
+  itemsEl.querySelectorAll('.cart-item,.combo-banner').forEach(e => e.remove());
+
+  if (nonComboItems.length === 0) {
     empty.style.display = 'block';
     footer.style.display = 'none';
-    // remove dynamic items
-    itemsEl.querySelectorAll('.cart-item').forEach(e => e.remove());
-  } else {
-    empty.style.display = 'none';
-    footer.style.display = 'block';
-    itemsEl.querySelectorAll('.cart-item').forEach(e => e.remove());
-    cart.forEach(item => {
-      const div = document.createElement('div');
-      div.className = 'cart-item fade-in';
-      div.innerHTML = `
-        <div>
-          <div style="font-family:'Rajdhani',sans-serif;font-weight:600;font-size:14px;color:${item.isCombo?'#A855F7':'#E2E8F0'}">${item.isCombo?'🔥 ':''}${item.name}</div>
-          <div style="color:#00FFFF;font-family:'Orbitron',sans-serif;font-size:12px">${fmt(item.price)}</div>
-        </div>
-        <button class="remove-btn" onclick="removeFromCart('${item.id}')">✕</button>
-      `;
-      itemsEl.appendChild(div);
-    });
-    const total = cart.reduce((s,c)=>s+c.price,0);
-    totalEl.textContent = fmt(total);
+    return;
   }
+
+  empty.style.display = 'none';
+  footer.style.display = 'block';
+
+  // Render individual items
+  nonComboItems.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'cart-item fade-in';
+    div.innerHTML = `
+      <div>
+        <div style="font-family:'Rajdhani',sans-serif;font-weight:600;font-size:14px;color:#E2E8F0">${item.name}</div>
+        <div style="color:#00FFFF;font-family:'Orbitron',sans-serif;font-size:12px">${fmt(item.price)}</div>
+      </div>
+      <button class="remove-btn" onclick="removeFromCart('${item.id}')">✕</button>
+    `;
+    itemsEl.appendChild(div);
+  });
+
+  // Combo banner
+  if (detectedCombo) {
+    const regularTotal = nonComboItems.reduce((s,c)=>s+c.price, 0);
+    const saved = regularTotal - detectedCombo.price;
+    const banner = document.createElement('div');
+    banner.className = 'combo-banner fade-in';
+    banner.style.cssText = `margin-top:14px;background:linear-gradient(135deg,${detectedCombo.color}22,${detectedCombo.color}0a);border:1px solid ${detectedCombo.color}66;border-radius:12px;padding:14px;`;
+    banner.innerHTML = `
+      <div style="font-family:'Orbitron',sans-serif;font-size:11px;color:${detectedCombo.color};letter-spacing:2px;margin-bottom:6px">⚡ COMBO DETECTADO</div>
+      <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:16px;color:#fff;margin-bottom:4px">${detectedCombo.emoji} ${detectedCombo.name}</div>
+      <div style="font-family:'Rajdhani',sans-serif;font-size:13px;color:#94A3B8;margin-bottom:10px">
+        En vez de pagar <span style="text-decoration:line-through;color:#64748B">${fmt(regularTotal)}</span> pagás solo
+        <span style="color:${detectedCombo.color};font-weight:700">${fmt(detectedCombo.price)}</span>
+        ${saved>0?`— <span style="color:#22C55E;font-weight:700">ahorrás ${fmt(saved)} 🎉</span>`:''}
+      </div>
+      <button onclick="applyCombo()" style="width:100%;background:${detectedCombo.color}33;border:1px solid ${detectedCombo.color}88;border-radius:8px;padding:9px;color:${detectedCombo.color};font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;cursor:pointer;letter-spacing:1px">
+        ✅ APLICAR COMBO
+      </button>
+    `;
+    itemsEl.appendChild(banner);
+  }
+
+  // Total
+  const appliedCombo = cart.find(c=>c.isCombo);
+  let displayTotal;
+  if (appliedCombo) {
+    displayTotal = appliedCombo.price;
+  } else {
+    displayTotal = nonComboItems.reduce((s,c)=>s+c.price,0);
+  }
+  totalEl.textContent = fmt(displayTotal);
+
+  // Show applied combo label if any
+  const appliedLabel = document.getElementById('applied-combo-label');
+  if (appliedLabel) appliedLabel.remove();
+  if (appliedCombo) {
+    const lbl = document.createElement('div');
+    lbl.id = 'applied-combo-label';
+    lbl.style.cssText = 'font-family:Rajdhani,sans-serif;font-size:12px;color:#22C55E;margin-bottom:8px;text-align:right';
+    lbl.innerHTML = `✅ ${appliedCombo.name} aplicado <button onclick="removeCombo()" style="background:none;border:none;color:#EF4444;cursor:pointer;font-size:11px">quitar</button>`;
+    document.querySelector('.cart-total-row').after(lbl);
+  }
+}
+
+function applyCombo() {
+  if (!detectedCombo) return;
+  // Remove any existing combo
+  cart = cart.filter(c=>!c.isCombo);
+  cart.push({id:'combo_'+detectedCombo.id, name:detectedCombo.name, price:detectedCombo.price, isCombo:true});
+  showToast('🎉 '+detectedCombo.name+' aplicado! Precio especial activado', '#22C55E');
+  updateCartUI();
+}
+
+function removeCombo() {
+  cart = cart.filter(c=>!c.isCombo);
+  updateCartUI();
 }
 
 function addToCart(id, isCombo) {
   if (isCombo) {
     const combo = COMBOS.find(c=>c.id===id);
+    cart = cart.filter(c=>!c.isCombo);
     if (cart.find(c=>c.id==='combo_'+id)) { showToast('Ya está en el carrito'); return; }
     cart.push({id:'combo_'+id, name:combo.name, price:combo.price, isCombo:true});
     showToast('✅ '+combo.name+' agregado');
@@ -301,7 +404,9 @@ function addToCart(id, isCombo) {
     const price = prod.isSelector ? prod.options[optIdx].price : prod.price;
     const cartId = id + label;
     if (cart.find(c=>c.id===cartId)) { showToast('Ya está en el carrito'); return; }
-    cart.push({id:cartId, name:prod.name+(label?' '+label:''), price, isCombo:false});
+    cart.push({id:cartId, name:prod.name+(label?' '+label:''), price, isCombo:false, baseId:id});
+    // Remove previously applied combo since cart changed
+    cart = cart.filter(c=>!c.isCombo);
     showToast('✅ '+(prod.name+(label?' '+label:''))+' agregado');
   }
   updateCartUI();
@@ -309,7 +414,7 @@ function addToCart(id, isCombo) {
 }
 
 function removeFromCart(id) {
-  cart = cart.filter(c=>c.id!==id);
+  cart = cart.filter(c=>c.id!==id && !c.isCombo);
   updateCartUI();
 }
 
@@ -324,10 +429,12 @@ function toggleFaq() {
 }
 
 function sendWhatsApp() {
-  const items = cart.map(c=>'• '+c.name+': '+fmt(c.price)).join('%0A');
-  const total = cart.reduce((s,c)=>s+c.price,0);
-  const combos = cart.filter(c=>c.isCombo).map(c=>c.name).join(', ') || 'Sin combo';
-  const msg = '¡Hola ApexStream! 👋%0APedido:%0A'+items+'%0ATotal: '+fmt(total)+'%0ACombo: '+combos+'%0A¡Aproveché las ofertas!';
+  const nonCombo = cart.filter(c=>!c.isCombo);
+  const appliedCombo = cart.find(c=>c.isCombo);
+  const items = nonCombo.map(c=>'• '+c.name+': '+fmt(c.price)).join('%0A');
+  const total = appliedCombo ? appliedCombo.price : nonCombo.reduce((s,c)=>s+c.price,0);
+  const comboTxt = appliedCombo ? appliedCombo.name : 'Sin combo';
+  const msg = '¡Hola ApexStream! 👋%0APedido:%0A'+items+'%0ATotal: '+fmt(total)+'%0ACombo: '+comboTxt+'%0A¡Aproveché las ofertas!';
   window.open('https://api.whatsapp.com/send?phone=595'+PHONE.replace(/^0/,'')+'&text='+msg,'_blank');
 }
 
